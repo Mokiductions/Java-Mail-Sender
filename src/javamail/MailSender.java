@@ -60,7 +60,7 @@ public class MailSender {
     /**
      * Establece el nombre de inicio de sesión del emisor.
      *
-     * @param username
+     * @param username String - Nombre de inicio de sesión
      */
     public void setSourceMail(String username) {
         this.username = username;
@@ -69,7 +69,7 @@ public class MailSender {
     /**
      * Establece la contraseña de inicio de sesión del emisor.
      *
-     * @param password
+     * @param password String - Contraseña de inicio de sesión
      */
     public void setPassword(String password) {
         this.password = password;
@@ -78,7 +78,7 @@ public class MailSender {
     /**
      * Establece el destinatario del correo.
      *
-     * @param destination
+     * @param destination String - destinatario del correo
      */
     public void setDestination(String destination) {
         this.destination = destination;
@@ -87,7 +87,7 @@ public class MailSender {
     /**
      * Establece el asunto del correo.
      *
-     * @param subject
+     * @param subject String - Asunto del correo
      */
     public void setSubject(String subject) {
         this.subject = subject;
@@ -96,7 +96,7 @@ public class MailSender {
     /**
      * Establece el cuerpo del correo.
      *
-     * @param body
+     * @param body String - Cuerpo del correo
      */
     public void setBody(String body) {
         this.body = body;
@@ -106,6 +106,7 @@ public class MailSender {
      * Método para enviar el correo.
      *
      * @throws javax.mail.MessagingException
+     * @throws java.io.UnsupportedEncodingException
      */
     public void send() throws MessagingException, UnsupportedEncodingException {
         // Establece las propiedades de la conexión.

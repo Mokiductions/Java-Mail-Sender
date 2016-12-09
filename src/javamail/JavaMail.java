@@ -31,16 +31,21 @@ public class JavaMail {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // Datos de la cuenta de emisión del correo
         final String username = "lander.user.services@gmail.com";
         final String password = "Landergame1234";
         MailSender sender = new MailSender(username, password);
         
+        // Establace el destinatario del correo
         sender.setDestination("ginesborrasm@gmail.com");
+        // Establece el asunto del correo
         sender.setSubject("Prueba");
+        // Establece el cuerpo del correo
         sender.setBody("Haga click <a href=\"http://www.google.es\">aquí</a> "
                 + "para ir a GOOGLE.");
         
         try {
+            // Envía el correo
             sender.send();
         } catch (MessagingException | UnsupportedEncodingException ex) {
             Logger.getLogger(JavaMail.class.getName()).log(Level.SEVERE, null, ex);
