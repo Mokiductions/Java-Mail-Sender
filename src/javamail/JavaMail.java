@@ -5,6 +5,7 @@
  */
 package javamail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
@@ -36,11 +37,12 @@ public class JavaMail {
         
         sender.setDestination("ginesborrasm@gmail.com");
         sender.setSubject("Prueba");
-        sender.setBody("Mensaje de prueba.");
+        sender.setBody("Haga click <a href=\"http://www.google.es\">aquí</a> "
+                + "para ir a GOOGLE.");
         
         try {
             sender.send();
-        } catch (MessagingException ex) {
+        } catch (MessagingException | UnsupportedEncodingException ex) {
             Logger.getLogger(JavaMail.class.getName()).log(Level.SEVERE, null, ex);
         }
 

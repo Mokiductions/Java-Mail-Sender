@@ -5,14 +5,18 @@
  */
 package javamail;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -100,9 +104,10 @@ public class MailSender {
 
     /**
      * Método para enviar el correo.
+     *
      * @throws javax.mail.MessagingException
      */
-    public void send() throws MessagingException {
+    public void send() throws MessagingException, UnsupportedEncodingException {
         // Establece las propiedades de la conexión.
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -118,19 +123,26 @@ public class MailSender {
                 return new PasswordAuthentication(username, password);
             }
         });
+
+        // Prepara el correo con los datos establecidos.
+        MimeMessage mail = new MimeMessage(session);
+        MimeBodyPart mailBody = new MimeBodyPart();
+        Multipart multipart = new MimeMultipart();
         
-            // Prepara el correo con los datos establecidos.
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(username));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
-            message.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(CCO));
-            message.setSubject(subject);
-            message.setText(body);
+        mail.setFrom(new InternetAddress(username));
+        mail.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destination));
+        mail.setRecipients(Message.RecipientType.BCC, InternetAddress.parse(CCO));
+        mail.setSubject(subject);
+        // Con el cuerpo del correo generado así, permite formatearlo mediante 
+        // código html, como insertar links, etc.
+        mailBody.setText(body, "UTF-8", "html");
+        multipart.addBodyPart(mailBody);
+        mail.setContent(multipart);
 
-            // Envía el correo
-            Transport.send(message);
+        // Envía el correo
+        Transport.send(mail);
 
-            System.out.println("Mensaje envíado correctamente.");
+        System.out.println("Mensaje envíado correctamente.");
     }
 
 }
